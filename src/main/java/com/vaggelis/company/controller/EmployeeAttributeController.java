@@ -3,7 +3,7 @@ package com.vaggelis.company.controller;
 import com.vaggelis.company.DTO.employeeDTO.EmployeeReadDTO;
 import com.vaggelis.company.mapper.Mapping;
 import com.vaggelis.company.model.Employee;
-import com.vaggelis.company.service.EmployeeAttributeService;
+import com.vaggelis.company.service.EmployeeAttributeServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmployeeAttributeController {
 
-    private final EmployeeAttributeService employeeAttributeService;
+    private final EmployeeAttributeServiceImpl employeeAttributeService;
 
     @PutMapping("/employee-attributes/update/{employeeId}/{attributeId}")
     public ResponseEntity<EmployeeReadDTO> addAttributeToEmployee(@PathVariable Long employeeId, @PathVariable Long attributeId) {

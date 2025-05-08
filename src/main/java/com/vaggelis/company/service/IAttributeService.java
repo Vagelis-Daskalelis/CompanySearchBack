@@ -7,6 +7,7 @@ import com.vaggelis.company.service.exceptions.EntityNotFoundException;
 
 import java.util.List;
 
+
 public interface IAttributeService {
     Attribute insertAttribute(AttributeInsertDTO dto) throws Exception;
     Attribute updateAttribute(AttributeUpdateDTO dto) throws EntityNotFoundException;

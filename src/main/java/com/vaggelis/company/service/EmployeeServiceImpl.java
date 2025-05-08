@@ -13,10 +13,19 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class EmployeeService implements IEmployeeService {
+public class EmployeeServiceImpl implements IEmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
+    /**Inserts an employee then searches his id
+     * if it's null it throws an exception
+     *
+     * returns the inserted employee
+     *
+     * @param dto
+     * @return Employee
+     * @throws Exception
+     */
     @Override
     public Employee insertEmployee(EmployeeInsertDTO dto) throws Exception {
         Employee employee;
@@ -32,6 +41,15 @@ public class EmployeeService implements IEmployeeService {
         return employee;
     }
 
+    /**Searches for the employee with the dto id if exists then updates him
+     * else it throws an exception
+     *
+     * returns the updated employee
+     *
+     * @param dto
+     * @return Employee
+     * @throws EntityNotFoundException
+     */
     @Override
     public Employee updateEmployee(EmployeeUpdateDTO dto) throws EntityNotFoundException {
         Employee employee;
@@ -48,6 +66,15 @@ public class EmployeeService implements IEmployeeService {
         return updatedEmployee;
     }
 
+    /**Searches for the employee with his id if he exists he gets deleted
+     * else it throws an exception
+     *
+     * returns the deleted employee
+     *
+     * @param id
+     * @return Employee
+     * @throws EntityNotFoundException
+     */
     @Override
     public Employee deleteEmployee(Long id) throws EntityNotFoundException {
         Employee employee = null;
@@ -62,11 +89,21 @@ public class EmployeeService implements IEmployeeService {
         return employee;
     }
 
+    /**Find and returns all employees
+     *
+     * @return List<Employee>
+     * @throws Exception
+     */
     @Override
     public List<Employee> findAllEmployees() throws Exception {
         return employeeRepository.findAll();
     }
 
+    /**returns all the home addresses of the saved employees
+     *
+     * @return List<String>
+     * @throws Exception
+     */
     @Override
     public List<String> findAllByAddresses() throws Exception{
         List<Employee> employees = employeeRepository.findAll();
@@ -75,6 +112,12 @@ public class EmployeeService implements IEmployeeService {
         return addresses;
     }
 
+    /**Find an employee by his home address
+     *
+     * @param address
+     * @return Employee
+     * @throws EntityNotFoundException
+     */
     @Override
     public Employee findByAddress(String address) throws EntityNotFoundException {
         Employee employee;
@@ -88,6 +131,12 @@ public class EmployeeService implements IEmployeeService {
         return employee;
     }
 
+    /**Find an employee by his id
+     *
+     * @param id
+     * @return Employee
+     * @throws EntityNotFoundException
+     */
     @Override
     public Employee findEmployee(Long id) throws EntityNotFoundException {
         Employee employee;

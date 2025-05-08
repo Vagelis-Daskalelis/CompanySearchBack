@@ -8,17 +8,25 @@ import com.vaggelis.company.repository.AttributeRepository;
 import com.vaggelis.company.service.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Attr;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AttributeService implements IAttributeService{
+public class AttributeServiceImpl implements IAttributeService{
 
     private final AttributeRepository attributeRepository;
 
+    /**Inserts an attribute then searches it's id
+     * if it's null it throws an exception
+     *
+     * returns the inserted attribute
+     *
+     * @param dto
+     * @return Attribute
+     * @throws Exception
+     */
     @Override
     public Attribute insertAttribute(AttributeInsertDTO dto) throws Exception {
         Attribute attribute;
@@ -36,6 +44,15 @@ public class AttributeService implements IAttributeService{
         return attribute;
     }
 
+    /**Searches for the attribute with the dto id if exists then updates it
+     * else it throws an exception
+     *
+     * returns the updated attribute
+     *
+     * @param dto
+     * @return Attribute
+     * @throws EntityNotFoundException
+     */
     @Override
     public Attribute updateAttribute(AttributeUpdateDTO dto) throws EntityNotFoundException {
         Attribute attribute;
@@ -52,6 +69,15 @@ public class AttributeService implements IAttributeService{
         return updatedAttribute;
     }
 
+    /**Searches for the attribute with it's id if it exists it gets deleted
+     * else it throws an exception
+     *
+     * returns the deleted attribute
+     *
+     * @param id
+     * @return Attribute
+     * @throws EntityNotFoundException
+     */
     @Override
     public Attribute deleteAttribute(Long id) throws EntityNotFoundException {
         Attribute attribute = null;
@@ -66,11 +92,22 @@ public class AttributeService implements IAttributeService{
         return attribute;
     }
 
+    /**Find and returns all attributes
+     *
+     * @return List<Attribute>
+     * @throws Exception
+     */
     @Override
     public List<Attribute> findAllAttributes() throws Exception {
         return attributeRepository.findAll();
     }
 
+    /**Find an attribute by it's id
+     *
+     * @param id
+     * @return Attribute
+     * @throws EntityNotFoundException
+     */
     @Override
     public Attribute findAttribute(Long id) throws EntityNotFoundException {
         Attribute attribute;

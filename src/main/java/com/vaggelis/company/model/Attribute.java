@@ -1,5 +1,6 @@
 package com.vaggelis.company.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,14 +27,23 @@ public class Attribute {
         this.value = value;
     }
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "attributes")
     private List<Employee> employees;
 
 
+    /**Adds the employee to the employees list
+     *
+     * @param employee
+     */
     public void addEmployee(Employee employee){
         this.employees.add(employee);
     }
 
+    /**Removes the employee from the employees list
+     *
+     * @param employee
+     */
     public void removeEmployee(Employee employee){
         this.employees.remove(employee);
     }

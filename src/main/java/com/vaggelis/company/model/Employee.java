@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -34,20 +36,31 @@ public class Employee {
     }
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "EmployeeAttribute", joinColumns = @JoinColumn(name = "employee_id"),
     inverseJoinColumns = @JoinColumn(name = "attribute_id", referencedColumnName = "id"))
     private List<Attribute> attributes;
 
+
+    /**Adds the attribute to the attributes list
+     *
+     * @param attribute
+     */
     public void addAttribute(Attribute attribute){
         this.attributes.add(attribute);
         attribute.addEmployee(this);
     }
 
+    /**Removes the attribute from the attributes list
+     *
+     * @param attribute
+     */
     public void removeAttribute(Attribute attribute){
         this.attributes.remove(attribute);
         attribute.removeEmployee(this);
     }
+
+
 
 
 }
