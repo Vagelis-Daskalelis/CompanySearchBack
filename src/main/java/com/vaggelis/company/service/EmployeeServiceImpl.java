@@ -3,6 +3,7 @@ package com.vaggelis.company.service;
 import com.vaggelis.company.DTO.employeeDTO.EmployeeInsertDTO;
 import com.vaggelis.company.DTO.employeeDTO.EmployeeUpdateDTO;
 import com.vaggelis.company.mapper.Mapping;
+import com.vaggelis.company.model.Attribute;
 import com.vaggelis.company.model.Employee;
 import com.vaggelis.company.repository.EmployeeRepository;
 import com.vaggelis.company.service.exceptions.EntityNotFoundException;
@@ -149,4 +150,23 @@ public class EmployeeServiceImpl implements IEmployeeService {
         }
         return employee;
     }
+
+    @Override
+    public List<Attribute> findAttributesByEmployee(Long id) throws EntityNotFoundException {
+        Employee employee;
+        List<Attribute> attributes;
+
+        try {
+            employee = employeeRepository.findEmployeeById(id);
+            if (employee == null) throw new EntityNotFoundException(Employee.class, id);
+
+            attributes = employee.getAttributes().stream().toList();
+
+            return attributes;
+        } catch (EntityNotFoundException e) {
+            throw e;
+        }
+    }
+
+
 }

@@ -1,9 +1,11 @@
 package com.vaggelis.company.controller;
 
+import com.vaggelis.company.DTO.attributeDTO.AttributeReadDTO;
 import com.vaggelis.company.DTO.employeeDTO.EmployeeInsertDTO;
 import com.vaggelis.company.DTO.employeeDTO.EmployeeReadDTO;
 import com.vaggelis.company.DTO.employeeDTO.EmployeeUpdateDTO;
 import com.vaggelis.company.mapper.Mapping;
+import com.vaggelis.company.model.Attribute;
 import com.vaggelis.company.model.Employee;
 import com.vaggelis.company.service.IEmployeeService;
 import com.vaggelis.company.service.exceptions.EntityNotFoundException;
@@ -20,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 public class EmployeeController {
 
     private final IEmployeeService employeeService;
@@ -38,6 +41,28 @@ public class EmployeeController {
             return new ResponseEntity<>(readDTOS, HttpStatus.OK);
         }catch (EntityNotFoundException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+    @GetMapping("/employees-attributes/{employeeId}")
+    public ResponseEntity<List<AttributeReadDTO>> getEmployeesAttribute(@PathVariable Long employeeId){
+        List<Attribute> attributes;
+
+        try {
+            attributes = employeeService.findAttributesByEmployee(employeeId);
+            List<AttributeReadDTO> readDTOS = new ArrayList<>();
+
+            for (Attribute attribute : attributes){
+                readDTOS.add(Mapping.mappingFromAttribute(attribute));
+            }
+            return new ResponseEntity<>(readDTOS, HttpStatus.OK);
+
+        }catch (EntityNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
             throw new RuntimeException(e);
         }
@@ -106,6 +131,9 @@ public class EmployeeController {
         }
     }
 
+
+
+
     @GetMapping("/addresses/{address}")
     public ResponseEntity<EmployeeReadDTO> findByAddress(@PathVariable String address){
         try {
@@ -116,4 +144,6 @@ public class EmployeeController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+
 }
