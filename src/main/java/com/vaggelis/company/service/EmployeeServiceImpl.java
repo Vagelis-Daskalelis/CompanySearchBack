@@ -5,6 +5,7 @@ import com.vaggelis.company.DTO.employeeDTO.EmployeeUpdateDTO;
 import com.vaggelis.company.mapper.Mapping;
 import com.vaggelis.company.model.Attribute;
 import com.vaggelis.company.model.Employee;
+import com.vaggelis.company.repository.AttributeRepository;
 import com.vaggelis.company.repository.EmployeeRepository;
 import com.vaggelis.company.service.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 public class EmployeeServiceImpl implements IEmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final AttributeRepository attributeRepository;
 
     /**Inserts an employee then searches his id
      * if it's null it throws an exception
@@ -166,6 +168,22 @@ public class EmployeeServiceImpl implements IEmployeeService {
         } catch (EntityNotFoundException e) {
             throw e;
         }
+    }
+
+
+    /**Finds the addresses of all the employees that have the attribute value that is searched
+     *
+     *
+     * @param value
+     * @return List<String>
+     */
+    @Override
+    public List<String> findAddressesByAttribute(String value) {
+        List<Employee> employees = employeeRepository.findEmployeesByAttributesValue(value);
+        List<String> addresses = employees.stream().map(employee -> employee.getAddress()).toList();
+
+        return addresses;
+
     }
 
 

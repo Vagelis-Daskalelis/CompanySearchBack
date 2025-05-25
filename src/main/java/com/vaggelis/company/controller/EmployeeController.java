@@ -83,6 +83,21 @@ public class EmployeeController {
         }
     }
 
+    @GetMapping("/addresses-by-value/{value}")
+    public ResponseEntity<List<String>> getAllAddressesByAttribute(@PathVariable String value){
+        List<String> addresses;
+
+        try {
+            addresses = employeeService.findAddressesByAttribute(value);
+            return new ResponseEntity<>(addresses, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+
+
     @PostMapping("/employees")
     public ResponseEntity<EmployeeReadDTO> addEmployee(@RequestBody EmployeeInsertDTO dto){
         try {

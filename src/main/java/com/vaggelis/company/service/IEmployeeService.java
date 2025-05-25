@@ -20,5 +20,11 @@ public interface IEmployeeService {
     Employee findByAddress(String address) throws EntityNotFoundException;
 
     Employee findEmployee(Long id) throws EntityNotFoundException;
+
     List<Attribute> findAttributesByEmployee(Long id) throws EntityNotFoundException;
+
+
+    List<String> findAddressesByAttribute(String value);
+
+
 }
